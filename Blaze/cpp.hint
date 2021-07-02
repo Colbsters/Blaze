@@ -1,0 +1,4 @@
+// Hint files help the Visual Studio IDE interpret Visual C++ identifiers
+// such as names of functions and macros.
+// For more information see https://go.microsoft.com/fwlink/?linkid=865984
+#define GENERATE_EXCEPTION_FUNC_(result, msg) inline Exception result(const char* message = nullptr) { return Exception(Result::result, message ? message : #msg); }
