@@ -22,7 +22,7 @@ namespace Blaze
 			Null = 0,
 			Invalid = Null,
 			Object = 0x0010,
-
+			Window = 0x0020,
 		};
 
 		enum class ImplementationID : uint16_t
@@ -57,19 +57,19 @@ namespace Blaze
 		virtual ~Object() = default;
 
 		// Creates the object
-		Result Create(const ObjectCreateInfo& createInfo) { return Create_Impl(createInfo); }
+		inline Result Create(const ObjectCreateInfo& createInfo) { return Create_Impl(createInfo); }
 		// Destroys the object
-		Result Destroy() { return Destroy_Impl(); }
+		inline Result Destroy() { return Destroy_Impl(); }
 
 		// Gets the id of the object
-		ObjectID GetObjectID() { return GetObjectID_Impl(); }
+		inline ObjectID GetObjectID() { return GetObjectID_Impl(); }
 		// This function is to be implemeted by any class/interface that inherits from this class
 		// Gets the id of the class
-		static ClassID GetClassID() { return Details::MakeClassID(Details::InterfaceID::Object, Details::ImplementationID::Invalid); }
+		inline static ClassID GetClassID() { return Details::MakeClassID(Details::InterfaceID::Object, Details::ImplementationID::Invalid); }
 
 		// Casts this object to another object, prefer the template version
 		// Returns nullptr if the cast is to an invalid type 
-		Ref<Object> CastTo(ClassID objectID) { return CastTo_Impl(objectID); }
+		inline Ref<Object> CastTo(ClassID objectID) { return CastTo_Impl(objectID); }
 
 		// Casts this object to another object, throws on invalid cast
 		template<typename T>
