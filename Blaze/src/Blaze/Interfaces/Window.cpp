@@ -1,3 +1,4 @@
+#include <pch.h>
 #include <Blaze/Window.h>
 
 namespace Blaze
