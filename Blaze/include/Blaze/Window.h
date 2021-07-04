@@ -46,7 +46,7 @@ namespace Blaze
 
 	typedef void(*WindowEventHandler)(const WindowEvent& event);
 
-	class Window
+	class BLAZE_API Window
 		:public Object
 	{
 	public:

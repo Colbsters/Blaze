@@ -50,7 +50,7 @@ namespace Blaze
 	};
 
 	// A base class for all blaze interfaces
-	class Object
+	class BLAZE_API Object
 		:public std::enable_shared_from_this<Object>
 	{
 	public:
