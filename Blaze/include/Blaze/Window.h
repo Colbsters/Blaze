@@ -55,6 +55,11 @@ namespace Blaze
 
 		inline static ClassID GetClassID() { return Details::MakeClassID(Details::InterfaceID::Window, Details::ImplementationID::Invalid); }
 
+		// Updates the window
+		inline Result Update() { return Update_Impl(); }
+		// Returns true while the should be updated
+		inline bool IsRunning() { return IsRunning_Impl(); }
+
 		// Pushes an event handler
 		inline Result PushEventHandler(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) { return PushEventHandler_Impl(eventCode, eventHandler); }
 		// Removes an event handler
@@ -65,6 +70,8 @@ namespace Blaze
 		// Moves the window
 		inline Result Move(int32_t x, int32_t y) { return Move_Impl(x, y); }
 	private:
+		virtual Result Update_Impl() = 0;
+		virtual bool IsRunning_Impl() = 0;
 		virtual Result PushEventHandler_Impl(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) = 0;
 		virtual Result RemoveEventHandler_Impl(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) = 0;
 		virtual Result Resize_Impl(uint32_t width, uint32_t height) = 0;
