@@ -78,14 +78,14 @@ namespace Blaze
 		template<typename T>
 		inline Ref<T> CastTo()
 		{
-			auto ptr = static_cast<Ref<T>>(CastTo(T::GetClassID()));
+			auto ptr = CastTo(T::GetClassID());
 			if (!ptr)
 				throw Exception(Result::InvalidCast, "Invalid CastTo type");
-			return ptr;
+			return std::static_pointer_cast<T>(ptr);
 		}
 		// Casts this object to another object, returns nullptr on invalid cast
 		template<typename T>
-		inline Ref<T> CastTo(std::nothrow_t) { return static_cast<Ref<T>>(CastTo(T::GetClassID())); }
+		inline Ref<T> CastTo(std::nothrow_t) { return std::static_pointer_cast<T>(CastTo(T::GetClassID())); }
 
 	protected:
 		ClassID classID;
