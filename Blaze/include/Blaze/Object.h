@@ -54,7 +54,8 @@ namespace Blaze
 		:public std::enable_shared_from_this<Object>
 	{
 	public:
-		virtual ~Object() = default;
+		Object() :classID(GetStaticClassID()), m_objectID(Details::CreateObjectID(this)) {}
+		virtual ~Object() { Details::DestroyObjectID(m_objectID); }
 
 		// Creates the object
 		inline Result Create(const ObjectCreateInfo& createInfo) { return Create_Impl(createInfo); }
@@ -62,10 +63,11 @@ namespace Blaze
 		inline Result Destroy() { return Destroy_Impl(); }
 
 		// Gets the id of the object
-		inline ObjectID GetObjectID() { return GetObjectID_Impl(); }
-		// This function is to be implemeted by any class/interface that inherits from this class
-		// Gets the id of the class
-		inline static ClassID GetClassID() { return Details::MakeClassID(Details::InterfaceID::Object, Details::ImplementationID::Invalid); }
+		inline ObjectID GetObjectID() { return Details::MakeObjectID(classID, m_objectID); }
+		// Gets the static id of the class
+		inline static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::Object, Details::ImplementationID::Invalid); }
+		// Gets the dynamic id of the class
+		inline ClassID GetDynamicClassID() { return classID; }
 
 		// Casts this object to another object, prefer the template version
 		// Returns nullptr if the cast is to an invalid type 
@@ -84,10 +86,13 @@ namespace Blaze
 		template<typename T>
 		inline Ref<T> CastTo(std::nothrow_t) { return static_cast<Ref<T>>(CastTo(T::GetClassID())); }
 
+	protected:
+		ClassID classID;
 	private:
+		uint32_t m_objectID;
+
 		virtual Result Create_Impl(const ObjectCreateInfo& createInfo) = 0;
 		virtual Result Destroy_Impl() = 0;
-		virtual ObjectID GetObjectID_Impl() = 0;
 		virtual Ref<Object> CastTo_Impl(ClassID objectID) = 0;
 	};
 }
