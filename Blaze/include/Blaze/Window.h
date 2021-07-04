@@ -55,7 +55,7 @@ namespace Blaze
 		// Creates a window
 		static Ref<Window> Create(const WindowCreateInfo& createInfo);
 
-		inline static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::Window, Details::ImplementationID::Invalid); }
+		constexpr static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::Window, Details::ImplementationID::Invalid); }
 
 		// Updates the window
 		inline Result Update() { return Update_Impl(); }

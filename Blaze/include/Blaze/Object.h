@@ -29,7 +29,8 @@ namespace Blaze
 		{
 			Null = 0,
 			Invalid = 0,
-			Generic = 1
+			Generic = 1,
+			Win32
 		};
 
 		// Makes a class ID
@@ -65,7 +66,7 @@ namespace Blaze
 		// Gets the id of the object
 		inline ObjectID GetObjectID() { return Details::MakeObjectID(classID, m_objectID); }
 		// Gets the static id of the class
-		inline static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::Object, Details::ImplementationID::Invalid); }
+		constexpr static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::Object, Details::ImplementationID::Invalid); }
 		// Gets the dynamic id of the class
 		inline ClassID GetDynamicClassID() { return classID; }
 
