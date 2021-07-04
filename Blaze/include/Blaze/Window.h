@@ -50,10 +50,12 @@ namespace Blaze
 		:public Object
 	{
 	public:
+		inline Window() { classID = GetStaticClassID(); }
+
 		// Creates a window
 		static Ref<Window> Create(const WindowCreateInfo& createInfo);
 
-		inline static ClassID GetClassID() { return Details::MakeClassID(Details::InterfaceID::Window, Details::ImplementationID::Invalid); }
+		inline static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::Window, Details::ImplementationID::Invalid); }
 
 		// Updates the window
 		inline Result Update() { return Update_Impl(); }

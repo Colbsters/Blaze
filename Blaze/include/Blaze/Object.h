@@ -54,8 +54,8 @@ namespace Blaze
 		:public std::enable_shared_from_this<Object>
 	{
 	public:
-		Object() :classID(GetStaticClassID()), m_objectID(Details::CreateObjectID(this)) {}
-		virtual ~Object() { Details::DestroyObjectID(m_objectID); }
+		inline Object() :classID(GetStaticClassID()), m_objectID(Details::CreateObjectID(this)) {}
+		inline virtual ~Object() { Details::DestroyObjectID(m_objectID); }
 
 		// Creates the object
 		inline Result Create(const ObjectCreateInfo& createInfo) { return Create_Impl(createInfo); }

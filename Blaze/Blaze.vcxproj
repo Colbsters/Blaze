@@ -180,9 +180,11 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="include\Blaze\Window.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Blaze\Interfaces\Window.cpp" />
     <ClCompile Include="src\Blaze\Object.cpp" />
     <ClCompile Include="src\Blaze\dllmain.cpp" />
     <ClCompile Include="src\pch.cpp">

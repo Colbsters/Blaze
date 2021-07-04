@@ -30,6 +30,9 @@
     <ClInclude Include="include\Blaze\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Blaze\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Blaze\dllmain.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Blaze\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Blaze\Interfaces\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
