@@ -1,1 +1,0 @@
-xcopy %2\Blaze.dll %1 /q /y

@@ -1,9 +1,15 @@
 #ifndef PCH_H
 #define PCH_H
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <Windows.h>
+
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <locale>
+#include <codecvt>
 #include <string>
 #include <vector>
 #include <utility>

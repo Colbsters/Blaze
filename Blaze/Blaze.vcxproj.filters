@@ -33,6 +33,9 @@
     <ClInclude Include="include\Blaze\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Blaze\Impl\Win32\Win32Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Blaze\dllmain.cpp">
@@ -47,8 +50,14 @@
     <ClCompile Include="src\Blaze\Interfaces\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Blaze\Impl\Win32\Win32Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="postbuild.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

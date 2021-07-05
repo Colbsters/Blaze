@@ -13,7 +13,8 @@ namespace Blaze
 		enum class WindowAPI
 		{
 			Null = 0,
-			Invalid = Null
+			Invalid = Null,
+			Win32
 		};
 	}
 
