@@ -3,6 +3,10 @@
 
 namespace Blaze
 {
+	// Work around or dll-interface warnings
+	template class std::weak_ptr<Object>;
+	template class std::enable_shared_from_this<Object>;
+
 	namespace Details
 	{
 #ifdef BLAZE_DEBUG

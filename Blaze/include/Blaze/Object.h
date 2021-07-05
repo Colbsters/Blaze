@@ -15,6 +15,10 @@ namespace Blaze
 	using ClassID = uint32_t;
 	class Object;
 
+	// Work around or dll-interface warnings
+	BLAZE_STL_EXTERN template class BLAZE_API std::weak_ptr<Object>;
+	BLAZE_STL_EXTERN template class BLAZE_API std::enable_shared_from_this<Object>;
+
 	namespace Details
 	{
 		enum class InterfaceID : uint16_t

@@ -14,8 +14,10 @@
 
 #ifdef BLAZE_EXPORTS
 #define BLAZE_API __declspec(dllexport)
+#define BLAZE_STL_EXTERN
 #else
 #define BLAZE_API __declspec(dllimport)
+#define BLAZE_STL_EXTERN extern
 #endif
 
 #endif // BLAZE_CORE_H
