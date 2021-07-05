@@ -5,6 +5,7 @@
 #define NOMINMAX
 #include <Windows.h>
 
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 #include <iostream>
 #include <sstream>
 #include <fstream>

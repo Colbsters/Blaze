@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <Blaze/Blaze.h>
 
 int main()
@@ -9,6 +11,8 @@ int main()
 		200, 100, 960, 540
 	};
 	auto window = Blaze::Window::Create(wndCreateInfo);
+
+	std::cout << window->GetTitle() << '\n';
 
 	while (window->IsRunning())
 		window->Update();

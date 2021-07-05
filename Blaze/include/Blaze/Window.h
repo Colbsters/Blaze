@@ -91,7 +91,7 @@ namespace Blaze
 		virtual bool IsRunning_Impl() = 0;
 		virtual Result PushEventHandler_Impl(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) = 0;
 		virtual Result RemoveEventHandler_Impl(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) = 0;
-		virtual Result SetTitle_Impl(std::string_view) = 0;
+		virtual Result SetTitle_Impl(std::string_view newTitle) = 0;
 		virtual std::string GetTitle_Impl() = 0;
 		virtual Result Resize_Impl(uint32_t width, uint32_t height) = 0;
 		virtual std::array<uint32_t, 2> GetWindowSize_Impl() = 0;

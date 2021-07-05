@@ -123,14 +123,62 @@ namespace Blaze
 			return Result::Success;
 		}
 
+		Result Win32Window::SetTitle_Impl(std::string_view newTitle)
+		{
+			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+			std::wstring titleWide = converter.from_bytes(&(*newTitle.begin()), &(*newTitle.end()));
+			SetWindowTextW(m_hWnd, titleWide.data());
+			return Result();
+		}
+
+		std::string Win32Window::GetTitle_Impl()
+		{
+			// Get the length of he title
+			SetLastError(0);
+			size_t titleLength = GetWindowTextLengthW(m_hWnd);
+			if ((!titleLength) && GetLastError())
+				return { };
+			// Get the title
+			std::vector<wchar_t> titleWide(titleLength + 1);
+			GetWindowTextW(m_hWnd, titleWide.data(), static_cast<int>(titleLength + 1));
+			// Convert to UTF-8
+			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+			return converter.to_bytes(titleWide.data());
+		}
+
 		Result Win32Window::Resize_Impl(uint32_t width, uint32_t height)
 		{
-			return Result();
+			if (!SetWindowPos(m_hWnd, nullptr, 0, 0, width, height, SWP_NOMOVE))
+				return Result::SystemError;
+			return Result::Success;
+		}
+
+		std::array<uint32_t, 2> Win32Window::GetWindowSize_Impl()
+		{
+			RECT rect;
+			GetWindowRect(m_hWnd, &rect);
+			return { static_cast<uint32_t>(rect.right - rect.left), static_cast<uint32_t>(rect.bottom - rect.top) };
+		}
+
+		std::array<uint32_t, 2> Win32Window::GetClientSize_Impl()
+		{
+			RECT rect;
+			GetClientRect(m_hWnd, &rect);
+			return { static_cast<uint32_t>(rect.bottom), static_cast<uint32_t>(rect.right) };
 		}
 
 		Result Win32Window::Move_Impl(int32_t x, int32_t y)
 		{
-			return Result();
+			if (!SetWindowPos(m_hWnd, nullptr, x, y, 0, 0, SWP_NOSIZE))
+				return Result::SystemError;
+			return Result::Success;
+		}
+
+		std::array<int32_t, 2> Win32Window::GetPosition_Impl()
+		{
+			RECT rect;
+			GetWindowRect(m_hWnd, &rect);
+			return { static_cast<int32_t>(rect.left), static_cast<int32_t>(rect.top) };
 		}
 
 		LRESULT __stdcall Win32Window::WndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -158,13 +206,14 @@ namespace Blaze
 					for (auto& eventHandler : window->m_eventHandlers[static_cast<size_t>(event.eventCode) - 1])
 						eventHandler(event);
 				}
+
+				if (msg == WM_DESTROY)
+				{
+					PostQuitMessage(0);
+					window->m_isRun = false;
+				}
 			}
 
-			if (msg == WM_DESTROY)
-			{
-				PostQuitMessage(0);
-				window->m_isRun = false;
-			}
 
 			return DefWindowProcW(hWnd, msg, wparam, lparam);
 		}

@@ -40,9 +40,17 @@ namespace Blaze
 			virtual Result PushEventHandler_Impl(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) override;
 			virtual Result RemoveEventHandler_Impl(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) override;
 
-			virtual Result Resize_Impl(uint32_t width, uint32_t height) override;
-			virtual Result Move_Impl(int32_t x, int32_t y) override;
+			virtual Result SetTitle_Impl(std::string_view newTitle) override;
+			virtual std::string GetTitle_Impl() override;
 
+			virtual Result Resize_Impl(uint32_t width, uint32_t height) override;
+			virtual std::array<uint32_t, 2> GetWindowSize_Impl() override;
+			virtual std::array<uint32_t, 2> GetClientSize_Impl() override;
+
+			virtual Result Move_Impl(int32_t x, int32_t y) override;
+			virtual std::array<int32_t, 2> GetPosition_Impl() override;
+
+			inline HWND GetHwnd() { return m_hWnd; }
 		private:
 			static LRESULT __stdcall WndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
 			static WindowEvent TranslateWindowEvent(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
