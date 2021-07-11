@@ -5,6 +5,7 @@
 
 #include <Blaze/Core.h>
 #include <Blaze/Error.h>
+#include <Blaze/Application.h>
 #include <Blaze/Object.h>
 #include <Blaze/Window.h>
 

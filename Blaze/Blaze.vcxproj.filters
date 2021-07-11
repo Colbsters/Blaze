@@ -36,6 +36,12 @@
     <ClInclude Include="src\Blaze\Impl\Win32\Win32Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Blaze\Impl\wgl\WGLRenderContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Blaze\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Blaze\dllmain.cpp">

@@ -183,6 +183,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Blaze\Application.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="include\Blaze\Object.h">
       <SubType>
       </SubType>
@@ -197,6 +201,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="include\Blaze\Window.h" />
+    <ClInclude Include="src\Blaze\Impl\wgl\WGLRenderContext.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Blaze\Impl\Win32\Win32Window.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
