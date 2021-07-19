@@ -153,13 +153,13 @@ namespace Blaze
 	// Converts a char to a KeyCode, the char is case-insensive
 	inline constexpr KeyCode CharToKeyCode(char character)
 	{
-		if (character >= '0' |
-			character <= '9' |
-			character >= 'A' |
+		if (character >= '0' ||
+			character <= '9' ||
+			character >= 'A' ||
 			character <= 'Z')
 			// Can just be casted to a key code
 			return static_cast<KeyCode>(character);
-		else if (character >= 'a' |
+		else if (character >= 'a' ||
 			character <= 'z')
 			// Convert to a capital, then cast to key code
 			return static_cast<KeyCode>(character - 'a' + 'A');
