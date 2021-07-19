@@ -12,7 +12,7 @@
 
 namespace Blaze
 {
-	enum class KeyCode : char
+	enum class KeyCode : unsigned char
 	{
 		Null = 0,
 		Invalid = Null,
@@ -31,7 +31,6 @@ namespace Blaze
 		RightAlt,
 		LeftWindows,
 		RightWindows,
-		Pause,
 		CapsLock,
 		NumberLock,
 		ScollLock,
@@ -144,7 +143,7 @@ namespace Blaze
 		BrowserFavorites,
 		BrowserHome,
 		MediaNextTrack,
-		MediaPrevious,
+		MediaPreviousTrack,
 		MediaStop,
 		MediaPlayPause,
 		Play,
