@@ -5,6 +5,7 @@
 
 #include <Blaze/Core.h>
 #include <Blaze/Object.h>
+#include <Blaze/Input.h>
 
 #include <string>
 #include <string_view>
@@ -46,10 +47,109 @@ namespace Blaze
 			MouseMove
 		};
 
+		inline static EventCode GetStaticEventCode() { return EventCode::Null; }
+		inline WindowEvent* CastTo(EventCode event) { return (eventCode == event) || event == EventCode::Null ? this : nullptr; }
+		inline const WindowEvent* CastTo(EventCode event) const { return (eventCode == event) || event == EventCode::Null ? this : nullptr; }
+		template <typename T>
+		inline T& CastTo()
+		{
+			auto* ptr = static_cast<T*>(CastTo(T::GetStaticEventCode()));
+			if (!ptr)
+				throw Exception(Result::InvalidCast, "Invalid CastTo event");
+			return *ptr;
+		}
+		template <typename T>
+		inline T& CastTo(std::nothrow_t)
+		{
+			auto* ptr = static_cast<T*>(CastTo(T::GetStaticEventCode()));
+			if (!ptr)
+				T{ EventCode::Null };
+			return *ptr;
+		}
+		template <typename T>
+		inline const T& CastTo() const
+		{
+			const auto* ptr = static_cast<const T*>(CastTo(T::GetStaticEventCode()));
+			if (!ptr)
+				throw Exception(Result::InvalidCast, "Invalid CastTo event");
+			return *ptr;
+		}
+		template <typename T>
+		inline const T& CastTo(std::nothrow_t) const
+		{
+			const auto* ptr = static_cast<const T*>(CastTo(T::GetStaticEventCode()));
+			if (!ptr)
+				return T{ EventCode::Null };
+			return *ptr;
+		}
+
+		Ref<Window> window;
 		EventCode eventCode;
 	};
 
-	typedef void(*WindowEventHandler)(const WindowEvent& event);
+#pragma region Window Events
+
+	struct WindowCreateEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::Create; }
+	};
+
+	struct WindowDestroyEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::Destroy; }
+	};
+
+	struct WindowResizeEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::Resize; }
+		uint32_t width, height;
+	};
+
+	struct WindowMoveEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::Move; }
+		int32_t x, y;
+	};
+
+	struct WindowKeyUpEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::KeyUp; }
+		KeyCode key;
+	};
+
+	struct WindowKeyDownEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::KeyDown; }
+		KeyCode key;
+	};
+
+	struct WindowMouseClickEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::MouseClick; }
+		MouseButton key;
+	};
+
+	struct WindowMouseMoveEvent
+		:public WindowEvent
+	{
+		inline static EventCode GetStaticEventCode() { return EventCode::MouseMove; }
+		uint32_t width, height;
+	};
+
+#pragma endregion
+
+	struct WindowEventHandler
+	{
+		typedef void(*EventHandler)(const WindowEvent&, void*);
+		void* data;
+	};
 
 	class BLAZE_API Window
 		:public Object
