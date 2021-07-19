@@ -23,14 +23,6 @@ namespace Blaze
 		};
 	}
 
-	struct WindowCreateInfo
-		:public ObjectCreateInfo
-	{
-		std::string wndTitle;
-		int32_t x, y;
-		uint32_t width, height;
-	};
-
 	struct WindowEvent
 	{
 		enum EventCode
@@ -149,6 +141,16 @@ namespace Blaze
 	{
 		typedef void(*EventHandler)(const WindowEvent&, void*);
 		void* data;
+	};
+
+	struct WindowCreateInfo
+		:public ObjectCreateInfo
+	{
+		std::string wndTitle;
+		int32_t x, y;
+		uint32_t width, height;
+		// These event handlers wil get called for all events;
+		std::vector<WindowEventHandler> eventHandlers;
 	};
 
 	class BLAZE_API Window
