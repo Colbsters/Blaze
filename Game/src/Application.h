@@ -229,7 +229,6 @@ public:
 
 	virtual void OnCreate() override
 	{
-		GetWindow()->PushEventHandler(Blaze::WindowEvent::Null, { LogWindowEvent, nullptr });
 	}
 
 	virtual void OnDestroy() override
@@ -248,10 +247,19 @@ private:
 
 Blaze::Application* CreateApplication()
 {
+	Blaze::WindowCreateInfo windowInfo;
+	windowInfo.wndTitle = "Blaze Window";
+	windowInfo.x = 200;
+	windowInfo.y = 100;
+	windowInfo.width = 960;
+	windowInfo.height = 540;
+	windowInfo.eventHandlers = {
+		{ LogWindowEvent, nullptr }
+	};
+
 	return new Game{
 		Blaze::GameAppConfig{
-			"Blaze Window",
-			960, 540
+			windowInfo
 		}
 	};
 }

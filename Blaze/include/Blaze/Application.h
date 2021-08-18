@@ -23,12 +23,8 @@ namespace Blaze
 	struct GameAppConfig
 	{
 		GameAppConfig() = default;
-		GameAppConfig(std::string_view windowTitle, uint32_t renderWidth, uint32_t renderHeight)
-			:windowTitle(windowTitle), renderWidth(renderWidth), renderHeight(renderHeight)
-		{}
 
-		std::string_view windowTitle;
-		uint32_t renderWidth, renderHeight;
+		WindowCreateInfo windowInfo;
 	};
 
 	// GameApp base class, similair to the Application class, but creates things like a window
@@ -38,13 +34,7 @@ namespace Blaze
 	public:
 		inline GameApp(const GameAppConfig& config)
 		{
-			WindowCreateInfo wndInfo;
-			wndInfo.wndTitle = config.windowTitle;
-			wndInfo.x = 200;
-			wndInfo.y = 100;
-			wndInfo.width = config.renderWidth;
-			wndInfo.height = config.renderHeight;
-			m_window = Window::Create(wndInfo);
+			m_window = Window::Create(config.windowInfo);
 		}
 
 		virtual ~GameApp() = default;
