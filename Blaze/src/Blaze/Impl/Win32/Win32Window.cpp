@@ -47,12 +47,15 @@ namespace Blaze
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 			std::wstring wndTitleWide = converter.from_bytes(info.wndTitle);
 
+			RECT rect = { info.x, info.y, info.x + info.width, info.y + info.height };
+			AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, FALSE, 0);
+
 			// NOTE: m_hWnd gets set in WndProc during WM_NCCREATE
 			if (!CreateWindowExW(0,
 				MAKEINTATOM(s_windowClassAtom),
 				wndTitleWide.c_str(),
 				WS_OVERLAPPEDWINDOW,
-				info.x, info.y, info.width, info.height,
+				rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
 				nullptr, nullptr, s_hInstance, this))
 				return Result::SystemError;
 
