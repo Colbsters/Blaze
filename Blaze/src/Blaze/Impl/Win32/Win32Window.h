@@ -10,6 +10,7 @@
 #include <Blaze/Core.h>
 #include <Blaze/Error.h>
 #include <Blaze/Window.h>
+#include <Blaze/Input.h>
 
 #include <vector>
 #include <array>
@@ -54,11 +55,14 @@ namespace Blaze
 		private:
 			static LRESULT __stdcall WndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
 			static WindowEvent TranslateWindowEvent(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
+			static KeyCode TranslateKeycode(WPARAM wparam, LPARAM lparam);
 
 			static ATOM s_windowClassAtom;
 			static HINSTANCE s_hInstance;
 			static std::mutex s_windowClassInfoMutex;
-			std::array<std::vector<WindowEventHandler>, numWindowEventCodes> m_eventHandlers;
+			
+			// One vector for each event, extra one for all events
+			std::array<std::vector<WindowEventHandler>, WindowEvent::NumEvents + 1> m_eventHandlers;
 
 			HWND m_hWnd;
 			bool m_isRun;

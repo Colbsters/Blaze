@@ -13,6 +13,8 @@
 
 namespace Blaze
 {
+	class BLAZE_API Window;
+
 	namespace Details
 	{
 		enum class WindowAPI
@@ -22,6 +24,47 @@ namespace Blaze
 			Win32
 		};
 	}
+
+#pragma region Window___EventInfo structures
+
+	struct WindowResizeEventInfo
+	{
+		uint32_t width, height;
+	};
+
+	struct WindowMoveEventInfo
+	{
+		int32_t x, y;
+	};
+
+	struct WindowKeyUpEventInfo
+	{
+		KeyCode key;
+	};
+
+	struct WindowKeyDownEventInfo
+	{
+		KeyCode key;
+	};
+
+	struct WindowMouseButtonUpEventInfo
+	{
+		uint32_t x, y;
+		MouseButton button;
+	};
+
+	struct WindowMouseButtonDownEventInfo
+	{
+		uint32_t x, y;
+		MouseButton button;
+	};
+
+	struct WindowMouseMoveEventInfo
+	{
+		uint32_t x, y;
+	};
+
+#pragma endregion
 
 	struct WindowEvent
 	{
@@ -35,111 +78,32 @@ namespace Blaze
 			Move,
 			KeyDown,
 			KeyUp,
-			MouseClick,
-			MouseMove
+			MouseButtonDown,
+			MouseButtonUp,
+			MouseMove,
+			NumEvents = 9
 		};
 
-		inline static EventCode GetStaticEventCode() { return EventCode::Null; }
-		inline WindowEvent* CastTo(EventCode event) { return (eventCode == event) || event == EventCode::Null ? this : nullptr; }
-		inline const WindowEvent* CastTo(EventCode event) const { return (eventCode == event) || event == EventCode::Null ? this : nullptr; }
-		template <typename T>
-		inline T& CastTo()
-		{
-			auto* ptr = static_cast<T*>(CastTo(T::GetStaticEventCode()));
-			if (!ptr)
-				throw Exception(Result::InvalidCast, "Invalid CastTo event");
-			return *ptr;
-		}
-		template <typename T>
-		inline T& CastTo(std::nothrow_t)
-		{
-			auto* ptr = static_cast<T*>(CastTo(T::GetStaticEventCode()));
-			if (!ptr)
-				T{ EventCode::Null };
-			return *ptr;
-		}
-		template <typename T>
-		inline const T& CastTo() const
-		{
-			const auto* ptr = static_cast<const T*>(CastTo(T::GetStaticEventCode()));
-			if (!ptr)
-				throw Exception(Result::InvalidCast, "Invalid CastTo event");
-			return *ptr;
-		}
-		template <typename T>
-		inline const T& CastTo(std::nothrow_t) const
-		{
-			const auto* ptr = static_cast<const T*>(CastTo(T::GetStaticEventCode()));
-			if (!ptr)
-				return T{ EventCode::Null };
-			return *ptr;
-		}
-
 		Ref<Window> window;
-		EventCode eventCode;
+		EventCode eventCode = EventCode::Null;
+
+		uint64_t reserved[2];
+
+		template<typename WindowEventInfo>
+		WindowEventInfo GetWindowEventInfo() const
+		{
+			WindowEventInfo info;
+			std::memcpy(&info, reserved, std::min(sizeof(info), sizeof(reserved)));
+			return info;
+		}
 	};
-
-#pragma region Window Events
-
-	struct WindowCreateEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::Create; }
-	};
-
-	struct WindowDestroyEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::Destroy; }
-	};
-
-	struct WindowResizeEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::Resize; }
-		uint32_t width, height;
-	};
-
-	struct WindowMoveEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::Move; }
-		int32_t x, y;
-	};
-
-	struct WindowKeyUpEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::KeyUp; }
-		KeyCode key;
-	};
-
-	struct WindowKeyDownEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::KeyDown; }
-		KeyCode key;
-	};
-
-	struct WindowMouseClickEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::MouseClick; }
-		MouseButton key;
-	};
-
-	struct WindowMouseMoveEvent
-		:public WindowEvent
-	{
-		inline static EventCode GetStaticEventCode() { return EventCode::MouseMove; }
-		uint32_t width, height;
-	};
-
-#pragma endregion
 
 	struct WindowEventHandler
 	{
+		bool operator==(const WindowEventHandler& rhs) { return (eventHandler == rhs.eventHandler) && (data == rhs.data); }
+
 		typedef void(*EventHandler)(const WindowEvent&, void*);
+		EventHandler eventHandler;
 		void* data;
 	};
 
@@ -169,7 +133,7 @@ namespace Blaze
 		// Returns true while the should be updated
 		inline bool IsRunning() { return IsRunning_Impl(); }
 
-		// Pushes an event handler
+		// Pushes an event handler, EventCode::Null means the event handler will be called for all events
 		inline Result PushEventHandler(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) { return PushEventHandler_Impl(eventCode, eventHandler); }
 		// Removes an event handler
 		inline Result RemoveEventHandler(WindowEvent::EventCode eventCode, WindowEventHandler eventHandler) { return RemoveEventHandler_Impl(eventCode, eventHandler); }
