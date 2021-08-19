@@ -274,18 +274,22 @@ namespace Blaze
 				break;
 			}
 			case WM_KEYDOWN:
+			case WM_SYSKEYDOWN:
 			{
 				event.eventCode = WindowEvent::KeyDown;
 				WindowKeyDownEventInfo info;
-				info.key = TranslateKeycode(wparam, lparam);
+				if ((info.key = TranslateKeycode(wparam, lparam)) == KeyCode::Invalid)
+					event.eventCode = WindowEvent::Invalid;
 				std::memcpy(event.reserved, &info, std::min(sizeof(info), sizeof(event.reserved)));
 				break;
 			}
 			case WM_KEYUP:
+			case WM_SYSKEYUP:
 			{
 				event.eventCode = WindowEvent::KeyUp;
 				WindowKeyUpEventInfo info;
-				info.key = TranslateKeycode(wparam, lparam);
+				if ((info.key = TranslateKeycode(wparam, lparam)) == KeyCode::Invalid)
+					event.eventCode = WindowEvent::Invalid;
 				std::memcpy(event.reserved, &info, std::min(sizeof(info), sizeof(event.reserved)));
 				break;
 			}
@@ -348,7 +352,7 @@ namespace Blaze
 
 		KeyCode Win32Window::TranslateKeycode(WPARAM wparam, LPARAM lparam)
 		{
-			constexpr std::array<KeyCode, 187> wparamToKeyCodeTable = 
+			constexpr std::array<KeyCode, 254> wparamToKeyCodeTable = 
 			{
 				KeyCode::Invalid,		// VK_LBUTTON
 				KeyCode::Invalid,		// VK_RBUTTON
@@ -495,20 +499,20 @@ namespace Blaze
 				KeyCode::Invalid,
 				KeyCode::NumberLock,	// VK_NUMLOCK
 				KeyCode::ScollLock,		// VK_SCROLL
-				// [145-157] (0x92-9D)
-				//KeyCode::Invalid,		// 0x92-96 OEM specific
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,		// 0x97-9F Unassigned
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
+				KeyCode::Invalid,		// 0x92-96 OEM specific
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,		// 0x97-9F Unassigned
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
 				KeyCode::LeftShift,			// VK_LSHIFT
 				KeyCode::RightShift,		// VK_RSHIFT
 				KeyCode::LeftControl,		// VK_LCONTROL
@@ -542,65 +546,63 @@ namespace Blaze
 				KeyCode::Period,		// VK_OEM_PERIOD
 				KeyCode::Slash,			// VK_OEM_2
 				KeyCode::Backtick,		// VK_OEM_3
-				// [191-216] (0xC0-D9)
-				//KeyCode::Invalid,		// 0xC1-D7 Reserved
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,		// 0xD8-DA Unassigned
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
+				KeyCode::Invalid,		// 0xC1-D7 Reserved
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,		// 0xD8-DA Unassigned
+				KeyCode::Invalid,
+				KeyCode::Invalid,
 				KeyCode::OpenBracket,	// VK_OEM_4
 				KeyCode::BackSlash,		// VK_OEM_5
 				KeyCode::CloseBracket,	// VK_OEM_6
 				KeyCode::Quote,			// VK_OEM_7
-				// [221-247] (0xDE-F8)
-				//KeyCode::Invalid,		// VK_OEM_8
-				//KeyCode::Invalid,		// 0xE0 Reserved
-				//KeyCode::Invalid,		// 0xE1 OEM specific
-				//KeyCode::Invalid,		// VK_OEM_102
-				//KeyCode::Invalid,		// 0xE3-E4 OEM specific
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,		// VK_PROCESSKEY
-				//KeyCode::Invalid,		// 0xE6 OEM specific
-				//KeyCode::Invalid,		// VK_PACKET
-				//KeyCode::Invalid,		// 0xE8 Unassigned
-				//KeyCode::Invalid,		// 0xE9-F5 OEM specific
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,
-				//KeyCode::Invalid,		// VK_ATTN
-				//KeyCode::Invalid,		// VK_CRSEL
-				//KeyCode::Invalid,		// VK_EXSEL
-				//KeyCode::Invalid,		// VK_EREOF
+				KeyCode::Invalid,		// VK_OEM_8
+				KeyCode::Invalid,		// 0xE0 Reserved
+				KeyCode::Invalid,		// 0xE1 OEM specific
+				KeyCode::Invalid,		// VK_OEM_102
+				KeyCode::Invalid,		// 0xE3-E4 OEM specific
+				KeyCode::Invalid,
+				KeyCode::Invalid,		// VK_PROCESSKEY
+				KeyCode::Invalid,		// 0xE6 OEM specific
+				KeyCode::Invalid,		// VK_PACKET
+				KeyCode::Invalid,		// 0xE8 Unassigned
+				KeyCode::Invalid,		// 0xE9-F5 OEM specific
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,
+				KeyCode::Invalid,		// VK_ATTN
+				KeyCode::Invalid,		// VK_CRSEL
+				KeyCode::Invalid,		// VK_EXSEL
+				KeyCode::Invalid,		// VK_EREOF
 				KeyCode::Play,			// VK_PLAY
 				KeyCode::Zoom,			// VK_ZOOM
 				KeyCode::Invalid,		// VK_NONAME
@@ -608,30 +610,9 @@ namespace Blaze
 				KeyCode::Clear			// VK_OEM_CLEAR
 			};
 
-			// Get the index
-			size_t index = wparam;
-			// Transform the index to span the large KeyCode::Invalid gaps
-			if (index >= 0xDE)
-			{
-				if (index <= 0xF8)
-					return KeyCode::Invalid;
-				index -= (27 + 26 + 13);
-			}
-			else if (index >= 0xC0)
-			{
-				if (index <= 0xD9)
-					return KeyCode::Invalid;
-				index -= (26 + 13);
-			}
-			else if (index >= 0x92)
-			{
-				if (wparam <= 0x9D)
-					return KeyCode::Invalid;
-				index -= (13);
-			}
 
 			// Get left/right keycodes
-			if (wparamToKeyCodeTable[index - 1] == static_cast<KeyCode>(0xff))
+			if (wparamToKeyCodeTable[wparam - 1] == static_cast<KeyCode>(0xff))
 			{
 				UINT scancode = (lparam & 0x00ff0000) >> 16;
 				int extended = (lparam & 0x01000000) != 0;
@@ -642,36 +623,15 @@ namespace Blaze
 					wparam = MapVirtualKeyW(scancode, MAPVK_VSC_TO_VK_EX);
 					break;
 				case VK_CONTROL:
-					wparam = extended ? VK_LCONTROL : VK_RCONTROL;
+					wparam = extended ? VK_RCONTROL : VK_LCONTROL;
 					break;
 				case VK_MENU:
-					wparam = extended ? VK_LMENU : VK_RMENU;
+					wparam = extended ? VK_RMENU : VK_LMENU;
 					break;
-				}
-
-				// Retransform the index to span the large KeyCode::Invalid gaps
-				index = wparam;
-				if (index >= 0xDE)
-				{
-					if (index <= 0xF8)
-						return KeyCode::Invalid;
-					index -= (27 + 26 + 13);
-				}
-				else if (index >= 0xC0)
-				{
-					if (index <= 0xD9)
-						return KeyCode::Invalid;
-					index -= (26 + 13);
-				}
-				else if (index >= 0x92)
-				{
-					if (wparam <= 0x9D)
-						return KeyCode::Invalid;
-					index -= (13);
 				}
 			}
 
-			return wparamToKeyCodeTable[index - 1];
+			return wparamToKeyCodeTable[wparam - 1];
 		}
 
 	}
