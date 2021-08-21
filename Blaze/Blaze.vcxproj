@@ -187,7 +187,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="include\Blaze\Input.h">
+    <ClInclude Include="include\Blaze\InputBase.h">
       <SubType>
       </SubType>
     </ClInclude>

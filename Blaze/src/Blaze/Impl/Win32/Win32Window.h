@@ -10,7 +10,7 @@
 #include <Blaze/Core.h>
 #include <Blaze/Error.h>
 #include <Blaze/Window.h>
-#include <Blaze/Input.h>
+#include <Blaze/InputBase.h>
 
 #include <vector>
 #include <array>

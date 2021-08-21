@@ -42,7 +42,7 @@
     <ClInclude Include="include\Blaze\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Blaze\Input.h">
+    <ClInclude Include="include\Blaze\InputBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Blaze\Renderer\RenderContext.h">

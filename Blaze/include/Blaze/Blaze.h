@@ -8,7 +8,7 @@
 #include <Blaze/Application.h>
 #include <Blaze/Object.h>
 #include <Blaze/Window.h>
-#include <Blaze/Input.h>
+#include <Blaze/InputBase.h>
 
 #include <Blaze/Renderer/RenderContext.h>
 

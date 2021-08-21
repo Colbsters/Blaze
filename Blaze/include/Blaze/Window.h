@@ -5,7 +5,7 @@
 
 #include <Blaze/Core.h>
 #include <Blaze/Object.h>
-#include <Blaze/Input.h>
+#include <Blaze/InputBase.h>
 
 #include <string>
 #include <string_view>
