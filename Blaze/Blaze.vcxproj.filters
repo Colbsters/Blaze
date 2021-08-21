@@ -48,6 +48,9 @@
     <ClInclude Include="include\Blaze\Renderer\RenderContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Blaze\KeyboardInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Blaze\dllmain.cpp">
