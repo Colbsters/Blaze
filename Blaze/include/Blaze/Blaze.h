@@ -10,4 +10,6 @@
 #include <Blaze/Window.h>
 #include <Blaze/Input.h>
 
+#include <Blaze/Renderer/RenderContext.h>
+
 #endif // BLAZE_BLAZE_H

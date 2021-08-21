@@ -27,6 +27,7 @@ namespace Blaze
 			Invalid = Null,
 			Object = 0x0010,
 			Window = 0x0020,
+			RenderContext = 0x0030
 		};
 
 		enum class ImplementationID : uint16_t

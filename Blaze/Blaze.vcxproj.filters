@@ -45,6 +45,9 @@
     <ClInclude Include="include\Blaze\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Blaze\Renderer\RenderContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Blaze\dllmain.cpp">
@@ -60,6 +63,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Blaze\Impl\Win32\Win32Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Blaze\Interfaces\RenderContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
