@@ -15,15 +15,12 @@ namespace Blaze
 {
 	class BLAZE_API Window;
 
-	namespace Details
+	enum class WindowAPI
 	{
-		enum class WindowAPI
-		{
-			Null = 0,
-			Invalid = Null,
-			Win32
-		};
-	}
+		Null = 0,
+		Invalid = Null,
+		Win32
+	};
 
 #pragma region Window___EventInfo structures
 
@@ -152,6 +149,8 @@ namespace Blaze
 		inline Result Move(int32_t x, int32_t y) { return Move_Impl(x, y); }
 		// Gets the position of the window
 		inline std::array<int32_t, 2> GetPosition() { return GetPosition_Impl(); }
+
+		inline WindowAPI GetAPI() { return GetAPI_Impl(); }
 	private:
 		virtual Result Update_Impl() = 0;
 		virtual bool IsRunning_Impl() = 0;
@@ -164,6 +163,7 @@ namespace Blaze
 		virtual std::array<uint32_t, 2> GetClientSize_Impl() = 0;
 		virtual Result Move_Impl(int32_t x, int32_t y) = 0;
 		virtual std::array<int32_t, 2> GetPosition_Impl() = 0;
+		virtual WindowAPI GetAPI_Impl() = 0;
 	};
 }
 

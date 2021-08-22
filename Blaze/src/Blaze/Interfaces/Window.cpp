@@ -19,7 +19,7 @@ namespace Blaze
 
 		switch (Details::windowAPI)
 		{
-		case Details::WindowAPI::Win32:
+		case WindowAPI::Win32:
 			ptr = Ref<Window>{ AllocateWin32Window() };
 			break;
 			// TODO: Add cases for other platforms
