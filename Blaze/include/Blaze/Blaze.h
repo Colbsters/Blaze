@@ -11,6 +11,7 @@
 
 #include <Blaze/InputBase.h>
 #include <Blaze/KeyboardInput.h>
+#include <Blaze/MouseInput.h>
 
 #include <Blaze/Renderer/RenderContext.h>
 

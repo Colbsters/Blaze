@@ -223,7 +223,7 @@ class Game
 {
 public:
 	Game(Blaze::GameAppConfig config)
-		:Blaze::GameApp(config), m_keyboard(GetWindow())
+		:Blaze::GameApp(config), m_keyboard(GetWindow()), m_mouse(GetWindow())
 	{
 	}
 
@@ -244,6 +244,7 @@ public:
 
 private:
 	Blaze::KeyboardInput m_keyboard;
+	Blaze::MouseInput m_mouse;
 };
 
 Blaze::Application* CreateApplication()
