@@ -3,6 +3,7 @@
 #ifndef BLAZE_RENDERCONTEXT_H
 #define BLAZE_RENDERCONTEXT_H
 
+#include <Blaze/Core.h>
 #include <Blaze/Object.h>
 #include <Blaze/Window.h>
 
