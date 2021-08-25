@@ -12,7 +12,8 @@ namespace Blaze
 	enum class RenderAPI
 	{
 		Null = 0,
-		Invalid = Null
+		Invalid = Null,
+		OpenGL
 	};
 
 	struct RenderContextCreateInfo
@@ -23,7 +24,7 @@ namespace Blaze
 		RenderAPI renderingApi = RenderAPI::Null;
 	};
 
-	class RenderContext
+	class BLAZE_API RenderContext
 		:public Object
 	{
 	public:
@@ -31,7 +32,7 @@ namespace Blaze
 
 		static Ref<RenderContext> Create(const RenderContextCreateInfo& createInfo);
 
-		inline static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::RenderContext, Details::ImplementationID::Invalid); }
+		static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::RenderContext, Details::ImplementationID::Invalid); }
 
 		// Makes the this context current
 		inline Result MakeCurrent() { return MakeCurrent_Impl(); }
