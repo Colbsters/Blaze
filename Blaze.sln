@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Blaze", "Blaze\Blaze.vcxproj", "{5F506C99-38F8-405A-B85E-085C34A9967B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{D307B812-827B-43FE-9338-B032A0A6977C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glad", "vendor\glad\glad.vcxproj", "{707BBEFC-8544-402A-A6F6-705A000E43CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,9 +35,20 @@ Global
 		{5F506C99-38F8-405A-B85E-085C34A9967B}.Release|x64.Build.0 = Release|x64
 		{5F506C99-38F8-405A-B85E-085C34A9967B}.Release|x86.ActiveCfg = Release|Win32
 		{5F506C99-38F8-405A-B85E-085C34A9967B}.Release|x86.Build.0 = Release|Win32
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Debug|x64.ActiveCfg = Debug|x64
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Debug|x64.Build.0 = Debug|x64
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Debug|x86.ActiveCfg = Debug|Win32
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Debug|x86.Build.0 = Debug|Win32
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Release|x64.ActiveCfg = Release|x64
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Release|x64.Build.0 = Release|x64
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Release|x86.ActiveCfg = Release|Win32
+		{707BBEFC-8544-402A-A6F6-705A000E43CA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{707BBEFC-8544-402A-A6F6-705A000E43CA} = {D307B812-827B-43FE-9338-B032A0A6977C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {609B5016-E46B-4025-ACC5-33E70BFD9E2F}
