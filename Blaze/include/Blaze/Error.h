@@ -17,7 +17,8 @@ namespace Blaze
 		InvalidParam,
 		InvalidCast,
 		SystemError,
-		AllocationError
+		AllocationError,
+		Uninitialized
 	};
 
 	class Exception
