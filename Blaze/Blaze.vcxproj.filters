@@ -54,6 +54,12 @@
     <ClInclude Include="include\Blaze\MouseInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Blaze\Impl\OpenGL\GLRenderContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Blaze\Impl\OpenGL\WGL\WGLRenderContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Blaze\dllmain.cpp">
@@ -72,6 +78,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Blaze\Interfaces\RenderContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Blaze\Impl\OpenGL\GLRenderContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Blaze\Impl\OpenGL\WGL\WGLRenderContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

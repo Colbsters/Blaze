@@ -35,7 +35,9 @@ namespace Blaze
 			Null = 0,
 			Invalid = 0,
 			Generic = 1,
-			Win32
+			Win32,
+			OpenGL,
+			WGL,
 		};
 
 		// Makes a class ID
