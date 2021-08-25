@@ -6,8 +6,9 @@
 #include <Windows.h>
 #include <windowsx.h>
 
-// OpenGL loader https://glad.dav1d.de/
-#include <glad/glad.h>
+// OpenGL loader (glad2) https://gen.glad.sh/
+#include <glad/gl.h>
+#include <glad/wgl.h>
 
 #define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 #include <iostream>

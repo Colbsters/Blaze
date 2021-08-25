@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\gl.c" />
+    <ClCompile Include="src\wgl.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\glad\glad.h" />
+    <ClInclude Include="include\glad\gl.h" />
+    <ClInclude Include="include\glad\wgl.h" />
     <ClInclude Include="include\KHR\khrplatform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
