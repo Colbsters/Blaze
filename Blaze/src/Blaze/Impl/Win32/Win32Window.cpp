@@ -64,7 +64,9 @@ namespace Blaze
 				nullptr, nullptr, s_hInstance, this))
 				return Result::SystemError;
 
-			ShowWindow(m_hWnd, SW_SHOW);
+			Result res = SetShowState_Impl(info.showState);
+			if (res != Result::Success)
+				return res;
 
 			m_isRun = true;
 
@@ -191,6 +193,52 @@ namespace Blaze
 			RECT rect;
 			GetWindowRect(m_hWnd, &rect);
 			return { static_cast<int32_t>(rect.left), static_cast<int32_t>(rect.top) };
+		}
+
+		Result Win32Window::SetShowState_Impl(WindowShowState showState)
+		{
+			if (static_cast<int>(showState) < 1 ||
+				static_cast<int>(showState) > 6)
+				return Result::InvalidParam;
+
+			constexpr std::array<int, 6> showStateTable =
+			{
+				SW_SHOW,
+				SW_HIDE,
+				SW_MINIMIZE,
+				SW_MAXIMIZE,
+				SW_RESTORE,
+				SW_SHOWDEFAULT
+			};
+
+			ShowWindow(m_hWnd, showStateTable[static_cast<size_t>(showState) - 1]);
+
+			return Result::Success;
+		}
+
+		WindowShowState Win32Window::GetShowState_Impl()
+		{
+			WINDOWPLACEMENT placement = { sizeof(WINDOWPLACEMENT) };
+			if (!GetWindowPlacement(m_hWnd, &placement))
+				return WindowShowState::Invalid;
+
+			std::array<WindowShowState, 12> showStateTable =
+			{
+				WindowShowState::Hide,		// SW_HIDE
+				WindowShowState::Show,		// SW_SHOWNORMAL
+				WindowShowState::Minimized,	// SW_SHOWMINIMIZED
+				WindowShowState::Maximized,	// SW_SHOWMAXIMIZED
+				WindowShowState::Show,		// SW_SHOWNOACTIVATE
+				WindowShowState::Show,		// SW_SHOW
+				WindowShowState::Minimized,	// SW_MINIMIZE
+				WindowShowState::Minimized,	// SW_SHOWMINNOACTIVE
+				WindowShowState::Show,		// SW_SHOWNA
+				WindowShowState::Restore,	// SW_RESTORE
+				WindowShowState::Default,	// SW_SHOWDEFAULT
+				WindowShowState::Minimized	// SW_FORCEMINIMIZE
+			};
+
+			return showStateTable[placement.showCmd];
 		}
 
 		LRESULT __stdcall Win32Window::WndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam)

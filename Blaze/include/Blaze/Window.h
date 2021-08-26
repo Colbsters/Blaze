@@ -104,12 +104,27 @@ namespace Blaze
 		void* data;
 	};
 
+	enum class WindowShowState
+	{
+		Null = 0,
+		Invalid = Null,
+		Show,
+		Hide,
+		Minimized,
+		Maximized,
+		Restore,
+		Default
+	};
+
 	struct WindowCreateInfo
 		:public ObjectCreateInfo
 	{
 		std::string wndTitle;
 		int32_t x, y;
 		uint32_t width, height;
+		
+		WindowShowState showState = WindowShowState::Default;
+
 		// These event handlers wil get called for all events;
 		std::vector<WindowEventHandler> eventHandlers;
 	};
@@ -150,6 +165,10 @@ namespace Blaze
 		// Gets the position of the window
 		inline std::array<int32_t, 2> GetPosition() { return GetPosition_Impl(); }
 
+		// Shows the window
+		inline Result SetShowState(WindowShowState showState) { return SetShowState_Impl(showState); }
+		inline WindowShowState GetShowState() { return GetShowState_Impl(); }
+
 		inline WindowAPI GetAPI() { return GetAPI_Impl(); }
 	private:
 		virtual Result Update_Impl() = 0;
@@ -163,6 +182,8 @@ namespace Blaze
 		virtual std::array<uint32_t, 2> GetClientSize_Impl() = 0;
 		virtual Result Move_Impl(int32_t x, int32_t y) = 0;
 		virtual std::array<int32_t, 2> GetPosition_Impl() = 0;
+		virtual Result SetShowState_Impl(WindowShowState showState) = 0;
+		virtual WindowShowState GetShowState_Impl() = 0;
 		virtual WindowAPI GetAPI_Impl() = 0;
 	};
 }

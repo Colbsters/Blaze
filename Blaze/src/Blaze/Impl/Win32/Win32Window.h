@@ -51,6 +51,9 @@ namespace Blaze
 			virtual Result Move_Impl(int32_t x, int32_t y) override;
 			virtual std::array<int32_t, 2> GetPosition_Impl() override;
 
+			virtual Result SetShowState_Impl(WindowShowState showState) override;
+			virtual WindowShowState GetShowState_Impl() override;
+
 			inline virtual WindowAPI GetAPI_Impl() { return WindowAPI::Win32; }
 
 			inline HWND GetHwnd() { return m_hWnd; }
