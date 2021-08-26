@@ -29,7 +29,7 @@ namespace Blaze
 		switch (info.renderingApi)
 		{
 		case RenderAPI::OpenGL:
-			return Ref<RenderContext>{ AllocateOpenGLRenderContext(info.window->GetAPI()) };
+			return Ref<RenderContext>{ AllocateOpenGLRenderContext(info.window->GetWindowAPI()) };
 		default:
 			return Ref<RenderContext>{ nullptr };
 		}
