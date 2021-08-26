@@ -169,7 +169,7 @@ namespace Blaze
 		inline Result SetShowState(WindowShowState showState) { return SetShowState_Impl(showState); }
 		inline WindowShowState GetShowState() { return GetShowState_Impl(); }
 
-		inline WindowAPI GetAPI() { return GetAPI_Impl(); }
+		inline WindowAPI GetWindowAPI() { return GetWindowAPI_Impl(); }
 	private:
 		virtual Result Update_Impl() = 0;
 		virtual bool IsRunning_Impl() = 0;
@@ -184,7 +184,7 @@ namespace Blaze
 		virtual std::array<int32_t, 2> GetPosition_Impl() = 0;
 		virtual Result SetShowState_Impl(WindowShowState showState) = 0;
 		virtual WindowShowState GetShowState_Impl() = 0;
-		virtual WindowAPI GetAPI_Impl() = 0;
+		virtual WindowAPI GetWindowAPI_Impl() = 0;
 	};
 }
 

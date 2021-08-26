@@ -54,7 +54,7 @@ namespace Blaze
 			virtual Result SetShowState_Impl(WindowShowState showState) override;
 			virtual WindowShowState GetShowState_Impl() override;
 
-			inline virtual WindowAPI GetAPI_Impl() { return WindowAPI::Win32; }
+			inline virtual WindowAPI GetWindowAPI_Impl() override { return WindowAPI::Win32; }
 
 			inline HWND GetHwnd() { return m_hWnd; }
 		private:
