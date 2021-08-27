@@ -9,17 +9,159 @@ namespace Blaze
 
 		Result InitializeWGL()
 		{
-			return Result();
+			static bool isWGLInitialized = false;
+
+			// Check if wg is already loaded
+			if (isWGLInitialized)
+				return Result::Success;
+
+			Result res;
+
+			// Create dummy window
+			WindowCreateInfo wndInfo;
+			wndInfo.wndTitle = "Blaze WGL Dummy Window";
+			wndInfo.showState = WindowShowState::Hide;
+
+			Ref<Win32::Win32Window> dummyWindow = std::make_shared<Win32::Win32Window>();
+			res = dummyWindow->Object::Create(static_cast<const ObjectCreateInfo&>(wndInfo));
+			if (res != Result::Success)
+				return res;
+
+			HWND hWnd = dummyWindow->GetHwnd();
+			HDC hdc = GetDC(hWnd);
+
+			// Set a dummy pixel format
+			PIXELFORMATDESCRIPTOR pfd = {};
+			pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+			pfd.nVersion = 1;
+			pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+			pfd.iPixelType = PFD_TYPE_RGBA;
+			pfd.cColorBits = 32;
+			pfd.cDepthBits = 24;
+			pfd.cStencilBits = 8;
+			pfd.iLayerType = PFD_MAIN_PLANE;
+
+			int pixelFormat = ChoosePixelFormat(hdc, &pfd);
+			if (!pixelFormat)
+				return Result::SystemError;
+
+			if (!SetPixelFormat(hdc, pixelFormat, &pfd))
+				return Result::SystemError;
+
+			// Create a dummy context
+			HGLRC dummyContext = wglCreateContext(hdc);
+			if (!dummyContext)
+				return Result::SystemError;
+
+			// Make the context current
+			if (!wglMakeCurrent(hdc, dummyContext))
+				return Result::SystemError;
+
+			// Load WGL
+			if (!gladLoaderLoadWGL(hdc))
+				return Result::UnknownError;
+
+			// Make the context obsolete
+			if (!wglMakeCurrent(nullptr, nullptr))
+				return Result::SystemError;
+
+			// Delete the dummy context
+			if (!wglDeleteContext(dummyContext))
+				return Result::SystemError;
+
+			isWGLInitialized = true;
+			return Result::Success;
 		}
 
 		Result WGLRenderContext::Create_Impl(const ObjectCreateInfo& createInfo)
 		{
-			return Result();
+			// Reqested OpenGL version: [0] = major, [1] = minor
+			constexpr std::array<int, 2> requestedGLVersion = { 3, 3 };
+
+			Result res;
+
+			// Obtain informatio about the window
+			const auto& info = static_cast<const RenderContextCreateInfo&>(createInfo);
+			m_window = info.window->CastTo<Win32::Win32Window>();
+			m_hdc = GetDC(m_window->GetHwnd());
+
+			// Initialize WGL
+			res = InitializeWGL();
+			if (res != Result::Success)
+				return res;
+
+			// Attributes for pixel format creation
+			constexpr std::array<int, 19> pixelFormatAttribs =
+			{
+				WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
+				WGL_SUPPORT_OPENGL_ARB, GL_TRUE,
+				WGL_DOUBLE_BUFFER_ARB, GL_TRUE,
+				WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,
+				WGL_COLOR_BITS_ARB, 32,
+				WGL_DEPTH_BITS_ARB, 24,
+				WGL_STENCIL_BITS_ARB, 8,
+				WGL_ACCELERATION_ARB, WGL_FULL_ACCELERATION_ARB,
+				WGL_SWAP_METHOD_ARB, WGL_SWAP_EXCHANGE_ARB,
+				0, // End
+			};
+
+			// Choose the pixel format
+			int pixelFormat;
+			UINT numFormats;
+			if (!wglChoosePixelFormatARB(m_hdc, pixelFormatAttribs.data(), nullptr, 1, &pixelFormat, &numFormats))
+				return Result::SystemError;
+
+			// Describe the pixel format so it can be set
+			PIXELFORMATDESCRIPTOR pfd = { sizeof(PIXELFORMATDESCRIPTOR) };
+			if (!DescribePixelFormat(m_hdc, pixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd))
+				return Result::SystemError;
+
+			// Set the pixel format
+			if (!SetPixelFormat(m_hdc, pixelFormat, &pfd))
+				return Result::SystemError;
+
+			// Attributes for context creation
+			constexpr std::array<int, 7> contextAttribs =
+			{
+				WGL_CONTEXT_MAJOR_VERSION_ARB, requestedGLVersion[0],
+				WGL_CONTEXT_MINOR_VERSION_ARB, requestedGLVersion[1],
+				WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+				0
+			};
+			
+			// Create the modern OpenGL context
+			m_hglrc = wglCreateContextAttribsARB(m_hdc, nullptr, contextAttribs.data());
+			if (!m_hglrc)
+				return Result::SystemError;
+
+			// Make the context current
+			res = MakeCurrent_Impl();
+			if (res != Result::Success)
+				return res;
+
+			// Load OpenGL using glad2
+			if (!gladLoaderLoadGLContext(&m_gl))
+				return Result::UnknownError;
+
+			// Print out OpenGL information (OpenGL version + GLSL version)
+			std::cout << "[Blaze:Info]: OpenGL info: \n\t OpenGL Version: " << m_gl.GetString(GL_VERSION) << "\n\t GLSL Version : " << m_gl.GetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
+
+			return Result::Success;
 		}
 
 		Result WGLRenderContext::Destroy_Impl()
 		{
-			return Result();
+			Result res;
+
+			// Make the context obsolete
+			res = MakeObsolete_Impl();
+			if (res != Result::Success)
+				return res;
+
+			if (!wglDeleteContext(m_hglrc))
+				return Result::SystemError;
+
+			return Result::Success;
 		}
 
 		Ref<Object> WGLRenderContext::CastTo_Impl(ClassID objectID)

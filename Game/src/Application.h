@@ -229,6 +229,17 @@ public:
 
 	virtual void OnCreate() override
 	{
+		Blaze::RenderContextCreateInfo renderContextInfo;
+		renderContextInfo.window = GetWindow();
+		renderContextInfo.renderingApi = Blaze::RenderAPI::OpenGL;
+
+		m_renderContext = Blaze::RenderContext::Create(renderContextInfo);
+
+		if (!m_renderContext.get())
+		{
+			std::cout << "Render context creation failed.\n";
+			std::terminate();
+		}
 	}
 
 	virtual void OnDestroy() override
@@ -245,6 +256,7 @@ public:
 private:
 	Blaze::KeyboardInput m_keyboard;
 	Blaze::MouseInput m_mouse;
+	Blaze::Ref<Blaze::RenderContext> m_renderContext;
 };
 
 Blaze::Application* CreateApplication()

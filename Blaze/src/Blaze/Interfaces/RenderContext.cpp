@@ -7,7 +7,7 @@ namespace Blaze
 	namespace Details
 	{
 #ifdef BLAZE_PLATFORM_WIN64
-		constexpr std::array<RenderAPI, 1> renderAPIs{};
+		constexpr std::array<RenderAPI, 1> renderAPIs{ RenderAPI::OpenGL };
 #else
 		constexpr std::array<RenderAPI, 0> renderAPIs {};
 #endif
@@ -29,11 +29,14 @@ namespace Blaze
 		switch (info.renderingApi)
 		{
 		case RenderAPI::OpenGL:
-			return Ref<RenderContext>{ AllocateOpenGLRenderContext(info.window->GetWindowAPI()) };
+			ptr = Ref<RenderContext>{ AllocateOpenGLRenderContext(info.window->GetWindowAPI()) };
+			break;
 		default:
 			return Ref<RenderContext>{ nullptr };
 		}
 
 		ptr->Object::Create(static_cast<const ObjectCreateInfo&>(info));
+
+		return ptr;
 	}
 }

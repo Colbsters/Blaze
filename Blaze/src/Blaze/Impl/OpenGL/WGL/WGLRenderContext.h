@@ -8,6 +8,7 @@
 #include <Blaze/Renderer/RenderContext.h>
 #include <Blaze/Impl/OpenGL/GLRenderContext.h>
 #include <Blaze/Window.h>
+#include <Blaze/Impl/Win32/Win32Window.h>
 
 #include <utility>
 #include <unordered_map>
@@ -39,9 +40,14 @@ namespace Blaze
 			virtual Result MakeObsolete_Impl() override;
 
 			virtual bool IsCurrent_Impl() override;
+
+			inline GladGLContext GetGL() { return m_gl; }
 		private:
 			static std::unordered_map<std::thread::id, WGLRenderContext*> m_currentContexts;
 
+			GladGLContext m_gl;
+
+			Ref<Win32::Win32Window> m_window;
 			HDC m_hdc;
 			HGLRC m_hglrc;
 		};
