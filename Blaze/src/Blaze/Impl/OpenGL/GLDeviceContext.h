@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef BLAZE_OPENGL_GLRENDERCONTEXT_H
-#define BLAZE_OPENGL_GLRENDERCONTEXT_H
+#ifndef BLAZE_OPENGL_GLDeviceContext_H
+#define BLAZE_OPENGL_GLDeviceContext_H
 
 #include <Blaze/Core.h>
 #include <Blaze/Error.h>
-#include <Blaze/Renderer/RenderContext.h>
+#include <Blaze/Renderer/DeviceContext.h>
 #include <Blaze/Window.h>
 
 namespace Blaze
@@ -13,13 +13,13 @@ namespace Blaze
 	namespace OpenGL
 	{
 		// Not a real implementation, just a base class for OpenGL render contexts (WGL, etc.)
-		class GLRenderContext
-			:public RenderContext
+		class GLDeviceContext
+			:public DeviceContext
 		{
 		public:
-			inline GLRenderContext() { classID = GetStaticClassID(); }
+			inline GLDeviceContext() { classID = GetStaticClassID(); }
 
-			static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::RenderContext, Details::ImplementationID::OpenGL); }
+			static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::DeviceContext, Details::ImplementationID::OpenGL); }
 
 			inline virtual RenderAPI GetRenderAPI_Impl() override { return RenderAPI::OpenGL; }
 		};
@@ -31,7 +31,7 @@ extern "C"
 	// Allocates an OpenGL render context, does not call create
 	// This function is meant for allocating sub-implementations (WGL, etc.) and dynamic loading, if implementations ever get split off into separate DLLs
 	// This function is meant for internal use
-	BLAZE_API Blaze::OpenGL::GLRenderContext* AllocateOpenGLRenderContext(Blaze::WindowAPI windowAPI);
+	BLAZE_API Blaze::OpenGL::GLDeviceContext* AllocateOpenGLDeviceContext(Blaze::WindowAPI windowAPI);
 }
 
-#endif // BLAZE_OPENGL_GLRENDERCONTEXT_H
+#endif // BLAZE_OPENGL_GLDeviceContext_H

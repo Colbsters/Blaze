@@ -229,11 +229,11 @@ public:
 
 	virtual void OnCreate() override
 	{
-		Blaze::RenderContextCreateInfo renderContextInfo;
+		Blaze::DeviceContextCreateInfo renderContextInfo;
 		renderContextInfo.window = GetWindow();
 		renderContextInfo.renderingApi = Blaze::RenderAPI::OpenGL;
 
-		m_renderContext = Blaze::RenderContext::Create(renderContextInfo);
+		m_renderContext = Blaze::DeviceContext::Create(renderContextInfo);
 
 		if (!m_renderContext.get())
 		{
@@ -256,7 +256,7 @@ public:
 private:
 	Blaze::KeyboardInput m_keyboard;
 	Blaze::MouseInput m_mouse;
-	Blaze::Ref<Blaze::RenderContext> m_renderContext;
+	Blaze::Ref<Blaze::DeviceContext> m_renderContext;
 };
 
 Blaze::Application* CreateApplication()

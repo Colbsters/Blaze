@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef BLAZE_OPENGL_WGLRENDERCONTEXT_H
-#define BLAZE_OPENGL_WGLRENDERCONTEXT_H
+#ifndef BLAZE_OPENGL_WGLDeviceContext_H
+#define BLAZE_OPENGL_WGLDeviceContext_H
 
 #include <Blaze/Core.h>
 #include <Blaze/Error.h>
-#include <Blaze/Renderer/RenderContext.h>
-#include <Blaze/Impl/OpenGL/GLRenderContext.h>
+#include <Blaze/Renderer/DeviceContext.h>
+#include <Blaze/Impl/OpenGL/GLDeviceContext.h>
 #include <Blaze/Window.h>
 #include <Blaze/Impl/Win32/Win32Window.h>
 
@@ -21,13 +21,13 @@ namespace Blaze
 	{
 		Result InitializeWGL();
 
-		class WGLRenderContext
-			:public GLRenderContext
+		class WGLDeviceContext
+			:public GLDeviceContext
 		{
 		public:
-			WGLRenderContext() { classID = GetStaticClassID(); }
+			WGLDeviceContext() { classID = GetStaticClassID(); }
 
-			static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::RenderContext, Details::ImplementationID::WGL); }
+			static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::DeviceContext, Details::ImplementationID::WGL); }
 
 			virtual Result Create_Impl(const ObjectCreateInfo& createInfo) override;
 
@@ -43,7 +43,7 @@ namespace Blaze
 
 			inline GladGLContext GetGL() { return m_gl; }
 		private:
-			static std::unordered_map<std::thread::id, WGLRenderContext*> m_currentContexts;
+			static std::unordered_map<std::thread::id, WGLDeviceContext*> m_currentContexts;
 
 			GladGLContext m_gl;
 
@@ -54,4 +54,4 @@ namespace Blaze
 	}
 }
 
-#endif // BLAZE_OPENGL_WGLRENDERCONTEXT_H
+#endif // BLAZE_OPENGL_WGLDeviceContext_H

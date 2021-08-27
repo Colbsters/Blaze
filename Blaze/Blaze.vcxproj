@@ -200,7 +200,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="include\Blaze\Renderer\RenderContext.h">
+    <ClInclude Include="include\Blaze\Renderer\DeviceContext.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -218,8 +218,8 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="include\Blaze\Window.h" />
-    <ClInclude Include="src\Blaze\Impl\OpenGL\GLRenderContext.h" />
-    <ClInclude Include="src\Blaze\Impl\OpenGL\WGL\WGLRenderContext.h">
+    <ClInclude Include="src\Blaze\Impl\OpenGL\GLDeviceContext.h" />
+    <ClInclude Include="src\Blaze\Impl\OpenGL\WGL\WGLDeviceContext.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -231,9 +231,9 @@
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Blaze\Impl\OpenGL\GLRenderContext.cpp" />
-    <ClCompile Include="src\Blaze\Impl\OpenGL\WGL\WGLRenderContext.cpp" />
-    <ClCompile Include="src\Blaze\Interfaces\RenderContext.cpp" />
+    <ClCompile Include="src\Blaze\Impl\OpenGL\GLDeviceContext.cpp" />
+    <ClCompile Include="src\Blaze\Impl\OpenGL\WGL\WGLDeviceContext.cpp" />
+    <ClCompile Include="src\Blaze\Interfaces\DeviceContext.cpp" />
     <ClCompile Include="src\Blaze\Impl\Win32\Win32Window.cpp" />
     <ClCompile Include="src\Blaze\Interfaces\Window.cpp" />
     <ClCompile Include="src\Blaze\Object.cpp" />

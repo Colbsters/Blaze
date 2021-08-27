@@ -13,6 +13,6 @@
 #include <Blaze/KeyboardInput.h>
 #include <Blaze/MouseInput.h>
 
-#include <Blaze/Renderer/RenderContext.h>
+#include <Blaze/Renderer/DeviceContext.h>
 
 #endif // BLAZE_BLAZE_H

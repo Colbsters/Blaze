@@ -1,6 +1,6 @@
 #include <pch.h>
-#include <Blaze/Renderer/RenderContext.h>
-#include <Blaze/Impl/OpenGL/GLRenderContext.h>
+#include <Blaze/Renderer/DeviceContext.h>
+#include <Blaze/Impl/OpenGL/GLDeviceContext.h>
 
 namespace Blaze
 {
@@ -13,10 +13,10 @@ namespace Blaze
 #endif
 	}
 
-	Ref<RenderContext> RenderContext::Create(const RenderContextCreateInfo& createInfo)
+	Ref<DeviceContext> DeviceContext::Create(const DeviceContextCreateInfo& createInfo)
 	{
-		Ref<RenderContext> ptr;
-		RenderContextCreateInfo info = createInfo;
+		Ref<DeviceContext> ptr;
+		DeviceContextCreateInfo info = createInfo;
 
 		// Use default API if one isn't specified
 		if (createInfo.renderingApi == RenderAPI::Null)
@@ -24,15 +24,15 @@ namespace Blaze
 
 		// Make sure the API is valid
 		if (std::find(Details::renderAPIs.begin(), Details::renderAPIs.end(), info.renderingApi) == Details::renderAPIs.end())
-			return Ref<RenderContext>{ nullptr };
+			return Ref<DeviceContext>{ nullptr };
 
 		switch (info.renderingApi)
 		{
 		case RenderAPI::OpenGL:
-			ptr = Ref<RenderContext>{ AllocateOpenGLRenderContext(info.window->GetWindowAPI()) };
+			ptr = Ref<DeviceContext>{ AllocateOpenGLDeviceContext(info.window->GetWindowAPI()) };
 			break;
 		default:
-			return Ref<RenderContext>{ nullptr };
+			return Ref<DeviceContext>{ nullptr };
 		}
 
 		ptr->Object::Create(static_cast<const ObjectCreateInfo&>(info));

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef BLAZE_RENDERCONTEXT_H
-#define BLAZE_RENDERCONTEXT_H
+#ifndef BLAZE_DeviceContext_H
+#define BLAZE_DeviceContext_H
 
 #include <Blaze/Core.h>
 #include <Blaze/Object.h>
@@ -16,7 +16,7 @@ namespace Blaze
 		OpenGL
 	};
 
-	struct RenderContextCreateInfo
+	struct DeviceContextCreateInfo
 		:public ObjectCreateInfo
 	{
 		Ref<Window> window;
@@ -24,15 +24,15 @@ namespace Blaze
 		RenderAPI renderingApi = RenderAPI::Null;
 	};
 
-	class BLAZE_API RenderContext
+	class BLAZE_API DeviceContext
 		:public Object
 	{
 	public:
-		inline RenderContext() { classID = GetStaticClassID(); }
+		inline DeviceContext() { classID = GetStaticClassID(); }
 
-		static Ref<RenderContext> Create(const RenderContextCreateInfo& createInfo);
+		static Ref<DeviceContext> Create(const DeviceContextCreateInfo& createInfo);
 
-		static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::RenderContext, Details::ImplementationID::Invalid); }
+		static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::DeviceContext, Details::ImplementationID::Invalid); }
 
 		// Makes the this context current
 		inline Result MakeCurrent() { return MakeCurrent_Impl(); }
@@ -51,4 +51,4 @@ namespace Blaze
 	};
 }
 
-#endif // BLAZE_RENDERCONTEXT_H
+#endif // BLAZE_DeviceContext_H

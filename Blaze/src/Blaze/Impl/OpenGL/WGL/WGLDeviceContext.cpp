@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "WGLRenderContext.h"
+#include "WGLDeviceContext.h"
 
 namespace Blaze
 {
 	namespace OpenGL
 	{
-		std::unordered_map<std::thread::id, WGLRenderContext*> WGLRenderContext::m_currentContexts = {};
+		std::unordered_map<std::thread::id, WGLDeviceContext*> WGLDeviceContext::m_currentContexts = {};
 
 		Result InitializeWGL()
 		{
@@ -73,7 +73,7 @@ namespace Blaze
 			return Result::Success;
 		}
 
-		Result WGLRenderContext::Create_Impl(const ObjectCreateInfo& createInfo)
+		Result WGLDeviceContext::Create_Impl(const ObjectCreateInfo& createInfo)
 		{
 			// Reqested OpenGL version: [0] = major, [1] = minor
 			constexpr std::array<int, 2> requestedGLVersion = { 3, 3 };
@@ -81,7 +81,7 @@ namespace Blaze
 			Result res;
 
 			// Obtain informatio about the window
-			const auto& info = static_cast<const RenderContextCreateInfo&>(createInfo);
+			const auto& info = static_cast<const DeviceContextCreateInfo&>(createInfo);
 			m_window = info.window->CastTo<Win32::Win32Window>();
 			m_hdc = GetDC(m_window->GetHwnd());
 
@@ -149,7 +149,7 @@ namespace Blaze
 			return Result::Success;
 		}
 
-		Result WGLRenderContext::Destroy_Impl()
+		Result WGLDeviceContext::Destroy_Impl()
 		{
 			Result res;
 
@@ -164,12 +164,12 @@ namespace Blaze
 			return Result::Success;
 		}
 
-		Ref<Object> WGLRenderContext::CastTo_Impl(ClassID objectID)
+		Ref<Object> WGLDeviceContext::CastTo_Impl(ClassID objectID)
 		{
 			constexpr std::array<ClassID, 4> castableIDs = {
 				Object::GetStaticClassID(),
-				RenderContext::GetStaticClassID(),
-				GLRenderContext::GetStaticClassID(),
+				DeviceContext::GetStaticClassID(),
+				GLDeviceContext::GetStaticClassID(),
 				GetStaticClassID()
 			};
 
@@ -180,7 +180,7 @@ namespace Blaze
 			return shared_from_this();
 		}
 
-		Result WGLRenderContext::MakeCurrent_Impl()
+		Result WGLDeviceContext::MakeCurrent_Impl()
 		{
 			auto threadId = std::this_thread::get_id();
 
@@ -198,7 +198,7 @@ namespace Blaze
 			return Result::Success;
 		}
 
-		Result WGLRenderContext::MakeObsolete_Impl()
+		Result WGLDeviceContext::MakeObsolete_Impl()
 		{
 			auto threadId = std::this_thread::get_id();
 
@@ -213,7 +213,7 @@ namespace Blaze
 			return Result::Success;
 		}
 
-		bool WGLRenderContext::IsCurrent_Impl()
+		bool WGLDeviceContext::IsCurrent_Impl()
 		{
 			return this == m_currentContexts[std::this_thread::get_id()];
 		}
