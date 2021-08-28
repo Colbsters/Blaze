@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef BLAZE_DeviceContext_H
-#define BLAZE_DeviceContext_H
+#ifndef BLAZE_DEVICECONTEXT_H
+#define BLAZE_DEVICECONTEXT_H
 
 #include <Blaze/Core.h>
 #include <Blaze/Object.h>
@@ -51,4 +51,4 @@ namespace Blaze
 	};
 }
 
-#endif // BLAZE_DeviceContext_H
+#endif // BLAZE_DEVICECONTEXT_H

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef BLAZE_OPENGL_GLDeviceContext_H
-#define BLAZE_OPENGL_GLDeviceContext_H
+#ifndef BLAZE_OPENGL_GLDEVICECONTEXT_H
+#define BLAZE_OPENGL_GLDEVICECONTEXT_H
 
 #include <Blaze/Core.h>
 #include <Blaze/Error.h>
@@ -34,4 +34,4 @@ extern "C"
 	BLAZE_API Blaze::OpenGL::GLDeviceContext* AllocateOpenGLDeviceContext(Blaze::WindowAPI windowAPI);
 }
 
-#endif // BLAZE_OPENGL_GLDeviceContext_H
+#endif // BLAZE_OPENGL_GLDEVICECONTEXT_H

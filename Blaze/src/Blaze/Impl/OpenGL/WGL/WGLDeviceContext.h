@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef BLAZE_OPENGL_WGLDeviceContext_H
-#define BLAZE_OPENGL_WGLDeviceContext_H
+#ifndef BLAZE_OPENGL_WGLDEVICECONTEXT_H
+#define BLAZE_OPENGL_WGLDEVICECONTEXT_H
 
 #include <Blaze/Core.h>
 #include <Blaze/Error.h>
@@ -54,4 +54,4 @@ namespace Blaze
 	}
 }
 
-#endif // BLAZE_OPENGL_WGLDeviceContext_H
+#endif // BLAZE_OPENGL_WGLDEVICECONTEXT_H
