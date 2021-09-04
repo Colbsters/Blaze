@@ -14,5 +14,7 @@
 #include <Blaze/MouseInput.h>
 
 #include <Blaze/Renderer/DeviceContext.h>
+#include <Blaze/Renderer/Format.h>
+#include <Blaze/Renderer/Buffer.h>
 
 #endif // BLAZE_BLAZE_H
