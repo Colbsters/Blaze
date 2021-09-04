@@ -27,7 +27,8 @@ namespace Blaze
 			Invalid = Null,
 			Object = 0x0010,
 			Window = 0x0020,
-			DeviceContext = 0x0030
+			DeviceContext = 0x0030,
+			Buffer = 0x0040
 		};
 
 		enum class ImplementationID : uint16_t
