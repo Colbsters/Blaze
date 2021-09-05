@@ -22,6 +22,10 @@ namespace Blaze
 			static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::DeviceContext, Details::ImplementationID::OpenGL); }
 
 			inline virtual RenderAPI GetRenderAPI_Impl() override { return RenderAPI::OpenGL; }
+
+			inline GladGLContext GetGL() { return m_gl; }
+		protected:
+			GladGLContext m_gl;
 		};
 	}
 }

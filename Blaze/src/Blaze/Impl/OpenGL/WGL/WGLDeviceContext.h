@@ -40,12 +40,8 @@ namespace Blaze
 			virtual Result MakeObsolete_Impl() override;
 
 			virtual bool IsCurrent_Impl() override;
-
-			inline GladGLContext GetGL() { return m_gl; }
 		private:
 			static std::unordered_map<std::thread::id, WGLDeviceContext*> m_currentContexts;
-
-			GladGLContext m_gl;
 
 			Ref<Win32::Win32Window> m_window;
 			HDC m_hdc;
