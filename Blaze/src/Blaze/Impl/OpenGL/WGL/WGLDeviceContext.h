@@ -26,6 +26,7 @@ namespace Blaze
 		{
 		public:
 			WGLDeviceContext() { classID = GetStaticClassID(); }
+			~WGLDeviceContext();
 
 			static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::DeviceContext, Details::ImplementationID::WGL); }
 

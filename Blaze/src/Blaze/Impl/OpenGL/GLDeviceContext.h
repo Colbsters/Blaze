@@ -18,6 +18,7 @@ namespace Blaze
 		{
 		public:
 			inline GLDeviceContext() { classID = GetStaticClassID(); }
+			virtual ~GLDeviceContext() = default;
 
 			static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::DeviceContext, Details::ImplementationID::OpenGL); }
 

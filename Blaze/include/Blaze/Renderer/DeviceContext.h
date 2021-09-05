@@ -29,6 +29,7 @@ namespace Blaze
 	{
 	public:
 		inline DeviceContext() { classID = GetStaticClassID(); }
+		virtual ~DeviceContext() = default;
 
 		static Ref<DeviceContext> Create(const DeviceContextCreateInfo& createInfo);
 

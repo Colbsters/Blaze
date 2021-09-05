@@ -73,6 +73,11 @@ namespace Blaze
 			return Result::Success;
 		}
 
+		WGLDeviceContext::~WGLDeviceContext()
+		{
+			Destroy_Impl();
+		}
+
 		Result WGLDeviceContext::Create_Impl(const ObjectCreateInfo& createInfo)
 		{
 			// Reqested OpenGL version: [0] = major, [1] = minor
@@ -158,8 +163,13 @@ namespace Blaze
 			if (res != Result::Success)
 				return res;
 
-			if (!wglDeleteContext(m_hglrc))
-				return Result::SystemError;
+			if (m_hglrc)
+			{
+				if (!wglDeleteContext(m_hglrc))
+					return Result::SystemError;
+			}
+			else
+				return Result::Uninitialized;
 
 			return Result::Success;
 		}
