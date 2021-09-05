@@ -38,6 +38,9 @@ namespace Blaze
 		:public Object
 	{
 	public:
+		inline Buffer() { classID = GetStaticClassID(); }
+		virtual ~Buffer() = default;
+
 		static Ref<Buffer> Create(const BufferCreateInfo& createInfo);
 
 		constexpr static ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::Buffer, Details::ImplementationID::Invalid); }
