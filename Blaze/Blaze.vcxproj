@@ -223,6 +223,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="include\Blaze\Window.h" />
+    <ClInclude Include="src\Blaze\Impl\OpenGL\GLBuffer.h" />
     <ClInclude Include="src\Blaze\Impl\OpenGL\GLDeviceContext.h" />
     <ClInclude Include="src\Blaze\Impl\OpenGL\WGL\WGLDeviceContext.h">
       <SubType>
@@ -236,6 +237,7 @@
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Blaze\Impl\OpenGL\GLBuffer.cpp" />
     <ClCompile Include="src\Blaze\Interfaces\Buffer.cpp" />
     <ClCompile Include="src\Blaze\Format.cpp" />
     <ClCompile Include="src\Blaze\Impl\OpenGL\GLDeviceContext.cpp" />
