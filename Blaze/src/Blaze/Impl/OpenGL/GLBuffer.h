@@ -41,4 +41,12 @@ namespace Blaze
 	}
 }
 
+extern "C"
+{
+	// Allocates an OpenGL buffer, does not call create
+	// This function is meant for dynamic loading, if implementations ever get split off into separate DLLs
+	// This function is meant for internal use
+	BLAZE_API Blaze::OpenGL::GLBuffer* AllocateOpenGLBuffer();
+}
+
 #endif // BLAZE_OPENGL_GLBUFFER_H

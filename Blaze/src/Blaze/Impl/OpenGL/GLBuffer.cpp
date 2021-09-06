@@ -131,3 +131,8 @@ namespace Blaze
 		}
 	}
 }
+
+Blaze::OpenGL::GLBuffer* AllocateOpenGLBuffer()
+{
+	return new Blaze::OpenGL::GLBuffer();
+}
