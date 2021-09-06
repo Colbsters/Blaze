@@ -34,6 +34,8 @@ namespace Blaze
 
 			virtual Result Destroy_Impl() override;
 
+			virtual Result SwapBuffers_Impl() override;
+
 			virtual Ref<Object> CastTo_Impl(ClassID objectID) override;
 
 			virtual Result MakeCurrent_Impl() override;

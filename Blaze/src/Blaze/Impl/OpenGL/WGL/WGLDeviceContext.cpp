@@ -174,6 +174,14 @@ namespace Blaze
 			return Result::Success;
 		}
 
+		Result WGLDeviceContext::SwapBuffers_Impl()
+		{
+			if (!::SwapBuffers(m_hdc))
+				return Result::SystemError;
+
+			return Result::Success;
+		}
+
 		Ref<Object> WGLDeviceContext::CastTo_Impl(ClassID objectID)
 		{
 			constexpr std::array<ClassID, 4> castableIDs = {

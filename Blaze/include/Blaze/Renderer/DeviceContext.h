@@ -35,19 +35,11 @@ namespace Blaze
 
 		static constexpr ClassID GetStaticClassID() { return Details::MakeClassID(Details::InterfaceID::DeviceContext, Details::ImplementationID::Invalid); }
 
-		// Makes the this context current
-		inline Result MakeCurrent() { return MakeCurrent_Impl(); }
-		// Makes this context obselete if it is current
-		inline Result MakeObsolete() { return MakeObsolete_Impl(); }
-		// Checks if this context is current
-		inline bool IsCurrent() { return IsCurrent_Impl(); }
+		inline Result SwapBuffers() { return SwapBuffers_Impl(); }
 
 		inline RenderAPI GetRenderAPI() { return GetRenderAPI_Impl(); }
-
 	private:
-		virtual Result MakeCurrent_Impl() = 0;
-		virtual Result MakeObsolete_Impl() = 0;
-		virtual bool IsCurrent_Impl() = 0;
+		virtual Result SwapBuffers_Impl() = 0;
 		virtual RenderAPI GetRenderAPI_Impl() = 0;
 	};
 }

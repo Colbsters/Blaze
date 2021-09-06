@@ -24,8 +24,19 @@ namespace Blaze
 
 			inline virtual RenderAPI GetRenderAPI_Impl() override { return RenderAPI::OpenGL; }
 
+			// Makes the this context current
+			inline Result MakeCurrent() { return MakeCurrent_Impl(); }
+			// Makes this context obselete if it is current
+			inline Result MakeObsolete() { return MakeObsolete_Impl(); }
+			// Checks if this context is current
+			inline bool IsCurrent() { return IsCurrent_Impl(); }
+
 			inline GladGLContext GetGL() { return m_gl; }
 		protected:
+			virtual Result MakeCurrent_Impl() = 0;
+			virtual Result MakeObsolete_Impl() = 0;
+			virtual bool IsCurrent_Impl() = 0;
+
 			GladGLContext m_gl;
 		};
 	}
